@@ -1,0 +1,19 @@
+---
+language: python
+services: docker
+
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+
+before_script:
+  - cd ../
+  - mv ansible-role-deploy-plex-docker deploy-plex
+  - cd deploy-plex
+
+install:
+  - pip install molecule docker
+
+script:
+  - molecule lint

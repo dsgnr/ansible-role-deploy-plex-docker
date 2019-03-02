@@ -1,0 +1,4 @@
+---
+plex_db_store: "/opt/plexmediaserver/db"
+plex_transcode_store: "/opt/plexmediaserver/transcode"
+plex_data_store: "/mnt/media"

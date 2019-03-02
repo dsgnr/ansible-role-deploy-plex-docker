@@ -1,0 +1,4 @@
+skip_list:
+  - '602'
+  - 'ANSIBLE0013'
+  - 'ANSIBLE0012'

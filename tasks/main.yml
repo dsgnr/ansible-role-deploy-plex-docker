@@ -1,0 +1,28 @@
+---
+
+- name: Include tasks for Ubuntu and Debian
+  include_tasks: ubuntu.yml
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Include tasks for Centos and RHEL
+  include_tasks: rhel.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: Ensure Docker is started and enabled at boot
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Initiate Plex Docker run
+  shell: |
+    docker run --restart always \
+    -d \
+    --name plex \
+    --network=host \
+    -e TZ="GMT" \
+    -e PLEX_CLAIM="{{ vault_plex_claim_id }}" \
+    -v {{ plex_db_store }}:/config \
+    -v {{ plex_transcode_store }}:/transcode \
+    -v {{ plex_data_store }}:/data \
+    plexinc/pms-docker
